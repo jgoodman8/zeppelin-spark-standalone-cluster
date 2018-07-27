@@ -1,12 +1,12 @@
 # Zeppelin with Spark Standalone Cluster
 
 - Apache Zeppelin version: 0.8.0
-- Apache Spark version: 2.2.0
+- Apache Spark version: 2.3.0
 
 ### Before launching the containers
 
 ```bash
-docker run --name=master -d bde2020/spark-master:2.2.0-hadoop2.7
+docker run --name=master -d bde2020/spark-master:2.3.0-hadoop2.7
 docker cp master:/spark spark
 docker stop master
 ```
@@ -19,7 +19,7 @@ It launch a cluster with a master node and two worker nodes. The UI is running a
 
 ```
 spark-master:
-    image: bde2020/spark-master:2.2.0-hadoop2.7
+    image: bde2020/spark-master:2.3.0-hadoop2.7
     container_name: spark-master
     expose:
         - "7077"
@@ -28,10 +28,8 @@ spark-master:
         - "7077:7077"
     environment:
         - INIT_DAEMON_STEP=setup_spark
-    volumes:
-        - ./spark:/spark
 spark-worker-1:
-    image: bde2020/spark-worker:2.2.0-hadoop2.7
+    image: bde2020/spark-worker:2.3.0-hadoop2.7
     container_name: spark-worker-1
     depends_on:
         - spark-master
@@ -40,7 +38,7 @@ spark-worker-1:
     environment:
         - "SPARK_MASTER=spark://spark-master:7077"
 spark-worker-2:
-    image: bde2020/spark-worker:2.2.0-hadoop2.7
+    image: bde2020/spark-worker:2.3.0-hadoop2.7
     container_name: spark-worker-2
     depends_on:
         - spark-master
